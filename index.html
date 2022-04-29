@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Develop -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
+    <!-- Production -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div v-for="dado in dados" class="card" :key="dado.nome">
+        <img class="info" src="icons/info.png" alt="">
+        <div class="hint">
+          <p>{{ dado.legenda }}</p>
+        </div>
+        <div class="content">
+          <div :class="'circle ' + dado.cor">
+            <img :src="'icons/' + dado.icone + '.png'" alt="">
+          </div>
+          <div class="text-container">
+            <p>{{ formatCardValue(dado.valor) }}</p>
+            <p>{{ dado.nome }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var app = new Vue({
+        el: '#app',
+        data: {
+          dados: [
+            {
+              nome: "Conversões",
+              valor: 2500000,
+              icone: "mail",
+              cor: "blue",
+              legenda: "Conversão é a ação do envio de qualquer formulário."
+            },
+            {
+              nome: "Leads",
+              valor: 965321,
+              icone: "person",
+              cor: "purple",
+              legenda: "Lead é um contato individual do cliente ao enviar formulários."
+            },
+            {
+              nome: "Custo por lead",
+              valor: "R$ 10",
+              icone: "currency",
+              cor: "green",
+              legenda: "É o cálculo do investimento utilizado pela quantidade de leads gerados no período."
+            }
+          ],
+          formattedValue: null
+        },
+        methods: {
+          formatCardValue: function(value) {
+            if(typeof(value) === "number") {
+              return this.formatNumberDigits(value);
+            } else {
+              return value;
+            }
+          },
+          formatNumberDigits(value) {
+            if(value > 999 && value < 1000000) {
+              return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            } else if(value > 1000000) {
+              return (value / 1000000).toFixed(1) + 'M';
+            } else if(value < 900) {
+              return value;
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
