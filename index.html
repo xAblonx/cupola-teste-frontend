@@ -5,9 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <!-- Develop -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
-    <!-- Production -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,25 +55,16 @@
               cor: "green",
               legenda: "É o cálculo do investimento utilizado pela quantidade de leads gerados no período."
             }
-          ],
-          formattedValue: null
+          ]
         },
         methods: {
           formatCardValue: function(value) {
-            if(typeof(value) === "number") {
-              return this.formatNumberDigits(value);
-            } else {
-              return value;
-            }
+            return typeof(value) === "number" ? this.formatNumberDigits(value) : value;
           },
           formatNumberDigits(value) {
-            if(value > 999 && value < 1000000) {
-              return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            } else if(value > 1000000) {
-              return (value / 1000000).toFixed(1) + 'M';
-            } else if(value < 900) {
-              return value;
-            }
+            return (value > 999 && value < 1000000) ?  
+              value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') :
+              (value > 1000000) ? (value / 1000000).toFixed(1) + 'M' : value;
           }
         }
       });
